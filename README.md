@@ -34,6 +34,9 @@ go get github.com/golang-migrate/migrate/v4
 
 to create a specific ```.sql``` file replace ```name_of_sql_file``` placeholder with your database operation name use below command and excute this command. 
 
+
+# To Create Psql Migration
+
 ``` go
 migrate create -ext sql -dir postgres/migration name_of_sql_file
 
@@ -48,11 +51,22 @@ Now you can put your sql logic which you want to execute on database in ```up.sq
 generallly creation, updation , reading operation related logic put into ```up.sql``` file. and deletion,rollback etc.. into ```down.sql```
 
 
+# To Create MySQL Migration
+
+```bash
+migrate create -ext sql -dir mysql -seq name_of_sql_file
+
+```
+
+it will create create a directory that contains `up.sql` and `down.sql` files in MySQL directory just like Psql above.
+
+
 # Execution of migration files
 
 There are two ways to excute written migration files
 
-## Way 1 using Command line 
+## Way 1 using Command line for Psql
+
 
 to execute all ```up.sql``` ending files
 
@@ -67,6 +81,14 @@ migrate -source file://postgres/migration -database postgres://postgres:password
 ```
 
 
+## For Mysql CLI
+
+will update...
+
+
+
+# if any error occurs
+
 ```Note``` if you migration failed makesure visit this docmentation 
 
 ```https://stackoverflow.com/questions/59616263/dirty-database-version-error-when-using-golang-migrate```
@@ -78,7 +100,8 @@ select * from schema_migrations;
 update schema_migrations set dirty =false
 ```
 
-## Way 2 using go program
+
+## Way 2 using go program for Psql
 
 first install migration library ```go get github.com/golang-migrate/migrate/v4```
 
@@ -121,6 +144,11 @@ Down looks at the currently active migration version and will migrate all the wa
 ```go 
 err = m.Down()
 ```
+
+# For MySQL
+
+see `mysql.go file` almost everything is same
+
 
 
 # Reference
